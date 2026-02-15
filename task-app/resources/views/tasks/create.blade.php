@@ -1,26 +1,50 @@
 @extends('layout')
 
 @section('content')
-<h2>新規タスク作成</h2>
+    <h2>新規タスク作成</h2>
 
-<form action="{{ route('tasks.store') }}" method="POST">
-    @csrf
+    <form action="{{ route('tasks.store') }}" method="POST">
+        @csrf
 
-    <div class="mb-3">
-        <label class="form-label">タイトル</label>
-        <input type="text" name="title" class="form-control" required>
-    </div>
+        <div class="mb-3">
+            <label class="form-label">タイトル</label>
+            <input type="text" name="title" class="form-control" required>
+        </div>
 
-    <div class="mb-3">
-        <label class="form-label">詳細</label>
-        <textarea name="description" class="form-control"></textarea>
-    </div>
+        <div class="mb-3">
+            <label class="form-label">詳細</label>
+            <textarea name="description" class="form-control"></textarea>
+        </div>
 
-    <div class="mb-3">
-        <label class="form-label">期限</label>
-        <input type="date" name="due_date" class="form-control">
-    </div>
+        <div class="mb-3">
+            <label class="form-label">期限</label>
+            <input type="date" name="due_date" class="form-control">
+        </div>
 
-    <button class="btn btn-primary">保存</button>
-</form>
+        <button class="btn btn-primary">保存</button>
+
+        <div class="mb-3">
+            <label class="form-label">タグ</label>
+            <select name="tags[]" class="form-control" multiple>
+                @foreach ($tags as $tag)
+                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">優先度</label>
+            <select name="priority" class="form-control">
+                <option value="high">高</option>
+                <option value="medium" selected>中</option>
+                <option value="low">低</option>
+            </select>
+        </div>
+
+
+
+
+
+
+    </form>
 @endsection

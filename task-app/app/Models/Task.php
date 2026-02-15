@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Container\Attributes\Tag;
 
 class Task extends Model
 {
@@ -12,4 +13,10 @@ class Task extends Model
         'due_data',
         'is_done'
     ];
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+        
+    }
 }
