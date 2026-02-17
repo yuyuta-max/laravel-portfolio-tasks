@@ -23,15 +23,7 @@
 
         <button class="btn btn-primary">保存</button>
 
-        <div class="mb-3">
-            <label class="form-label">タグ</label>
-            <select name="tags[]" class="form-control" multiple>
-                @foreach ($tags as $tag)
-                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                @endforeach
-            </select>
-        </div>
-
+        
         <div class="mb-3">
             <label class="form-label">優先度</label>
             <select name="priority" class="form-control">

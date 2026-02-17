@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
-use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -16,9 +15,7 @@ class TaskController extends Controller
 
     public function create()
     {
-        $tags = Tag::all(); 
-
-        return view('tasks.create', compact('tags'));
+        return view('tasks.create');
     }
 
     public function store(Request $request)
@@ -27,23 +24,18 @@ class TaskController extends Controller
             'title' => 'required|max:255',
             'description' => 'nullable',
             'due_date' => 'nullable|date',
+            'priority' => 'required|string',
         ]);
 
         Task::create($request->all());
 
         return redirect()->route('tasks.index')->with('success', 'タスクを追加しました');
-
-        $task = Task::create($request->all());
-        $task->tags()->sync($request->tags);
     }
 
     public function edit(Task $task)
     {
-        $tags = Tag::all(); 
-
-        return view('tasks.edit', compact('task', 'tags'));
+        return view('tasks.edit', compact('task'));
     }
-
 
     public function update(Request $request, Task $task)
     {
@@ -51,14 +43,12 @@ class TaskController extends Controller
             'title' => 'required|max:255',
             'description' => 'nullable',
             'due_date' => 'nullable|date',
+            'priority' => 'required|string',
         ]);
 
         $task->update($request->all());
 
         return redirect()->route('tasks.index')->with('success', 'タスクを更新しました');
-
-        $task->update($request->all());
-        $task->tags()->sync($request->tags);
     }
 
     public function destroy(Task $task)

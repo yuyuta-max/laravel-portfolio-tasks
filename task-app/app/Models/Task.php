@@ -3,20 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Container\Attributes\Tag;
+use App\Models\Tag;
 
 class Task extends Model
 {
     protected $fillable = [
         'title',
         'description',
-        'due_data',
+        'due_date',
         'is_done'
     ];
 
-    public function tags()
+    public function priorityColor()
     {
-        return $this->belongsToMany(Tag::class);
-        
+        return match ($this->priority)
+        {
+            'high' => '#ff9999',
+            'medium' => '#fff59d',
+            'low'    => '#c8e6c9',
+            default    =>'white',
+        };
     }
 }

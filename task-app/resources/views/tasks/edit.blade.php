@@ -24,14 +24,7 @@
 
         <button class="btn btn-primary">更新</button>
 
-        <div class="mb-3">
-            <label class="form-label">タグ</label>
-            <select name="tags[]" class="form-control" multiple>
-                @foreach ($tags as $tag)
-                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
-                @endforeach
-            </select>
-        </div>
+        
 
         <div class="mb-3">
             <label class="form-label">優先度</label>
@@ -42,11 +35,7 @@
             </select>
         </div>
 
-        @foreach ($task->tags as $tag)
-            <span class="badge" style="background: {{ $tag->color ?? '#888' }}">
-                {{ $tag->name }}
-            </span>
-        @endforeach
+       
 
         @php
             $color = [
@@ -60,17 +49,7 @@
             {{ strtoupper($task->priority) }}
         </span>
 
-        <div class="mb-3">
-            <label class="form-label">タグ</label>
-            <select name="tags[]" class="form-control" multiple>
-                @foreach ($tags as $tag)
-                    <option value="{{ $tag->id }}" {{ $task->tags->contains($tag->id) ? 'selected' : '' }}>
-                        {{ $tag->name }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
+        
 
 
 
