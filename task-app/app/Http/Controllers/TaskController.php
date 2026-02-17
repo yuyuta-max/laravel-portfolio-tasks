@@ -27,8 +27,13 @@ class TaskController extends Controller
             'priority' => 'required|string',
         ]);
 
-        Task::create($request->all());
-
+        Task::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'due_date' => $request->due_date,
+            'priority' => $request->priority,
+            'is_done' => false,
+        ]);
         return redirect()->route('tasks.index')->with('success', 'タスクを追加しました');
     }
 
@@ -46,7 +51,12 @@ class TaskController extends Controller
             'priority' => 'required|string',
         ]);
 
-        $task->update($request->all());
+        $task->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'due_date' => $request->due_date,
+            'priority' => $request->priority,
+        ]);
 
         return redirect()->route('tasks.index')->with('success', 'タスクを更新しました');
     }
