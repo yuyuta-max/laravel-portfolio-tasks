@@ -1,0 +1,47 @@
+<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+    <!-- Primary Navigation Menu -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+
+            <!-- Left Side -->
+            <div class="flex">
+                <!-- Logo -->
+                <div class="shrink-0 flex items-center">
+                    <a href="{{ route('tasks.index') }}">
+                        <span class="font-bold text-lg">TaskApp</span>
+                    </a>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+
+                    <!-- タスク一覧 -->
+                    <x-nav-link :href="route('tasks.index')" :active="request()->routeIs('tasks.index')">
+                        タスク一覧
+                    </x-nav-link>
+
+                    <!-- タスク作成 -->
+                    <x-nav-link :href="route('tasks.create')" :active="request()->routeIs('tasks.create')">
+                        タスク作成
+                    </x-nav-link>
+
+                </div>
+            </div>
+
+            <!-- Right Side -->
+            <div class="hidden sm:flex sm:items-center sm:ml-6">
+
+                <!-- ログアウト -->
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="text-red-500 hover:text-red-700">
+                        ログアウト
+                    </button>
+                </form>
+
+            </div>
+
+        </div>
+    </div>
+</nav>
+

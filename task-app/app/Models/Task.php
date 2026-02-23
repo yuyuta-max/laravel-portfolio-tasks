@@ -12,17 +12,22 @@ class Task extends Model
         'description',
         'due_date',
         'priority',
-        'is_done'
+        'is_done',
+        'user_id',
     ];
 
     public function priorityColor()
     {
-        return match ($this->priority)
-        {
+        return match ($this->priority) {
             'high' => '#ff9999',
             'medium' => '#fff59d',
             'low'    => '#c8e6c9',
-            default    =>'white',
+            default    => 'white',
         };
+    }
+
+    public function sharedUsers()
+    {
+        return $this->belongsToMany(User::class, 'task_user');
     }
 }

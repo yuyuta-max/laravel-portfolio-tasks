@@ -23,7 +23,7 @@
 
         <button class="btn btn-primary">保存</button>
 
-        
+
         <div class="mb-3">
             <label class="form-label">優先度</label>
             <select name="priority" class="form-control">
@@ -32,6 +32,19 @@
                 <option value="low">低</option>
             </select>
         </div>
+
+        <div>
+            <label class="font-bold">共有するユーザー</label>
+            <div class="mt-2">
+                @foreach (\App\Models\User::where('id', '!=', auth()->id())->get() as $user)
+                    <label class="block">
+                        <input type="checkbox" name="shared_users[]" value="{{ $user->id }}">
+                        {{ $user->name }}
+                    </label>
+                @endforeach
+            </div>
+        </div>
+
 
 
 

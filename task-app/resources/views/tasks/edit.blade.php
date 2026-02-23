@@ -24,7 +24,7 @@
 
         <button class="btn btn-primary">更新</button>
 
-        
+
 
         <div class="mb-3">
             <label class="form-label">優先度</label>
@@ -35,7 +35,7 @@
             </select>
         </div>
 
-       
+
 
         @php
             $color = [
@@ -50,6 +50,22 @@
         </span>
 
         
+        <div>
+            <label class="font-bold">共有するユーザー</label>
+            <div class="mt-2">
+                @foreach (\App\Models\User::where('id', '!=', auth()->id())->get() as $user)
+                    <label class="block">
+                        <input type="checkbox" name="shared_users[]" value="{{ $user->id }}"
+                            {{ $task->sharedUsers->contains($user->id) ? 'checked' : '' }}>
+                        {{ $user->name }}
+                    </label>
+                @endforeach
+            </div>
+        </div>
+
+
+
+
 
 
 
