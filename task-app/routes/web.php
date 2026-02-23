@@ -5,23 +5,21 @@ use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return redirect()->route('tasks.index'); // ← ログイン後すぐタスク画面に行きたいならこれ
+    return redirect()->route('tasks.index');
 });
 
 Route::get('/dashboard', function () {
     return redirect()->route('tasks.index');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
 Route::middleware('auth')->group(function () {
 
-    // タスク管理のルート
+    // タスク管理
     Route::resource('tasks', TaskController::class);
 
-
+    // 完了チェック
     Route::patch('/tasks/{task}/toggle', [TaskController::class, 'toggle'])
         ->name('tasks.toggle');
-
 
     // プロフィール
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -29,4 +27,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
