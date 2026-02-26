@@ -8,10 +8,10 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
-            <a href="{{ route('tasks.create') }}"
-                class="bg-green-700 text-white font-bold px-4 py-4 rounded-md shadow-md hover:bg-blue-300 transition">
-                ＋ 新規タスク
+            <a href="{{ route('tasks.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                NewTask
             </a>
+
 
             <div class="mt-6 bg-white shadow-sm rounded-lg p-6">
                 <table class="w-full">
@@ -47,21 +47,28 @@
 
 
 
-                                <td>{{ $task->due_date }}</td>
+                                <td class="px-4 py-2">
+                                    <div class="flex justify-center items-center">
+                                        {{ $task->due_date ?? '未設定' }}
+                                    </div>
+                                </td>
 
-                                <td>
+
+                                <td class="px-4 py-2 text-center">
                                     <a href="{{ route('tasks.edit', $task) }}"
-                                        class="text-yellow-500 hover:underline">編集</a>
+                                        class="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 mr-2">
+                                        編集
+                                    </a>
 
                                     <form action="{{ route('tasks.destroy', $task) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button class="text-red-500 hover:underline"
-                                            onclick="return confirm('削除しますか？')">
+                                        <button class="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700">
                                             削除
                                         </button>
                                     </form>
                                 </td>
+
                             </tr>
                         @endforeach
                     </tbody>
