@@ -16,6 +16,8 @@ Route::middleware('auth')->group(function () {
 
     // タスク管理
     Route::resource('tasks', TaskController::class);
+    Route::get('/tasks/{task}', [TaskController::class, 'show'])->name('tasks.show');
+
 
     // 完了チェック
     Route::patch('/tasks/{task}/toggle', [TaskController::class, 'toggle'])

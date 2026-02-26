@@ -9,15 +9,22 @@ class TaskController extends Controller
 {
     public function index()
     {
-        $tasks = Task::where('user_id', auth()->id())
-            ->orWhereHas('sharedUsers', function ($q) {
-                $q->where('user_id', auth()->id());
-            })
-            ->orderBy('due_date')
-            ->get();
+        $user = auth()->user();
+
+        // 自分のタスク
+        $ownTasks = Task::where('user_id', $user->id);
+
+        // 共有されたタスク
+        $sharedTasks = Task::whereHas('sharedUsers', function ($query) use ($user) {
+            $query->where('users.id', $user->id);
+        });
+
+        // 2つをまとめて取得（重複なし）
+        $tasks = $ownTasks->union($sharedTasks)->orderBy('due_date')->get();
 
         return view('tasks.index', compact('tasks'));
     }
+
 
     public function create()
     {
@@ -34,7 +41,7 @@ class TaskController extends Controller
             'shared_users' => 'array',
         ]);
 
-        Task::create([
+        $task = Task::create([
             'title' => $request->title,
             'description' => $request->description,
             'due_date' => $request->due_date,
@@ -47,8 +54,19 @@ class TaskController extends Controller
             $task->sharedUsers()->sync($request->shared_users);
         }
 
+
         return redirect()->route('tasks.index')->with('success', 'タスクを追加しました');
     }
+    public function show(Task $task)
+    {
+        // 自分のタスク or 共有されたタスクのみ閲覧可能
+        if ($task->user_id !== auth()->id() && !$task->sharedUsers->contains(auth()->id())) {
+            abort(403);
+        }
+
+        return view('tasks.show', compact('task'));
+    }
+
 
 
     public function edit(Task $task)
